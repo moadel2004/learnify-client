@@ -17,7 +17,8 @@ import 'package:learnify_client/screens/setting_content/setting_content_screen.d
 import 'package:learnify_client/screens/setting_screen/cubit/switch_cubit.dart';
 import 'package:learnify_client/screens/setting_screen/models/setting_models.dart';
 import 'package:learnify_client/screens/sign_in_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learnify_client/l10n/app_localizations.dart';
+
 import 'package:learnify_client/screens/sign_up_screen/register_cubit.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -125,7 +126,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     });
               } else if (model.name == 'Language') {
                 _showLanguageDialog(
-                    context); // عرض القائمة عند الضغط على السهم بجوار اللغة
+                    context); // Show dialog when clicking on language arrow
               }
             },
             child: Container(
@@ -250,7 +251,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       context.read<LanguageCubit>().toArabic();
                     }
                   });
-                  Navigator.pop(context); // إغلاق الـ Dialog بعد الاختيار
+                  Navigator.pop(context); // Close dialog after selection
                 },
               ),
             ],
@@ -368,8 +369,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
     final loginCubit = context.read<LoginCubit>();
     var box = Hive.box('USER_BOX');
-    String? username = box.get('username', defaultValue: loginCubit.username);
-    String? email = box.get('email', defaultValue: registerCubit.emaill);
+    String? username = box.get('username', defaultValue: 'guest');
+    String? email = box.get('email', defaultValue: 'example@gmail.com');
     return Container(
       width: 370,
       height: 80,

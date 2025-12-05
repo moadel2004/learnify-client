@@ -56,9 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-  final loginCubit = context.read<LoginCubit>();
     var box = Hive.box('USER_BOX');
-    String? username = box.get('username', defaultValue: loginCubit.username);
+    String? username = box.get('username', defaultValue: '');
 
     return BlocBuilder<CarouselCubit, CarouselState>(
       builder: (context, state) {
@@ -309,23 +308,23 @@ class _HomeScreenState extends State<HomeScreen> {
         return GestureDetector(
           onTap: () {
             if (model.title! == 'Busseniss Managemant')
-          Get.to(
-            CourseDetail(
-              course: FeaturedModel(
-                  title: 'Busseniss Managemant',
-                  description: "Supply Chain Managemant",
-                  image: 'assets/images/R (1).jfif'),
-            ),
-          );
-        else if (model.title! == 'UI/UX Design')
-          Get.to(
-            CourseDetail(
-              course: FeaturedModel(
-                  title: 'UI/UX Design',
-                  description: 'User Interface Design Essentials',
-                  image: 'assets/images/R.jfif'),
-            ),
-          );
+              Get.to(
+                CourseDetail(
+                  course: FeaturedModel(
+                      title: 'Busseniss Managemant',
+                      description: "Supply Chain Managemant",
+                      image: 'assets/images/R (1).jfif'),
+                ),
+              );
+            else if (model.title! == 'UI/UX Design')
+              Get.to(
+                CourseDetail(
+                  course: FeaturedModel(
+                      title: 'UI/UX Design',
+                      description: 'User Interface Design Essentials',
+                      image: 'assets/images/R.jfif'),
+                ),
+              );
           },
           child: Container(
             width: width * 0.7,

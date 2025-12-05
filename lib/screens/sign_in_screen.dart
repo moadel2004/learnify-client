@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learnify_client/cubit/login_cubit.dart';
-import 'package:learnify_client/helpers/hive_helper.dart';
+
 import 'package:learnify_client/screens/bottomNav/bottom_nav.dart';
 import 'package:learnify_client/screens/forget_pass_screen/for_get_pass.dart';
 import 'package:learnify_client/screens/setting_screen/cubit/switch_cubit.dart';
@@ -210,7 +210,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         SizedBox(
                           height: 48,
-                          child: TextField(
+                          child: TextFormField(
                             controller: _emailController,
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
@@ -230,6 +230,15 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email is required';
+                              }
+                              if (!GetUtils.isEmail(value)) {
+                                return 'Invalid email address';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -288,6 +297,12 @@ class _SignInScreenState extends State<SignInScreen> {
                                 },
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password is required';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         const SizedBox(
@@ -348,10 +363,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                           email: _emailController.text,
                                           password:
                                               _userPasswordController.text);
-                                      HiveHelper.setValueLoginBox();
+                                      // Removed HiveHelper.setValueLoginBox() from here
+                                      // It is handled in the Cubit upon success
                                     }
-                                    // Button action here
-                                    print('Button Pressed');
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:

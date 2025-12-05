@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:learnify_client/helpers/dio_helper.dart';
@@ -11,45 +12,54 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
-  LoginModel model = LoginModel();
-  String? username;
-  String? emaill;
+
+  LoginModel? model; // Nullable to avoid init issues
 
   void login({
     required String email,
     required String password,
   }) async {
     emit(LoginLoadingState());
+
     try {
-      final response = await DioHelper.postData(path: 'login', body: {
-        "email": email,
-        "password": password,
-      });
+      final response = await DioHelper.postData(
+        path: 'login',
+        body: {
+          "email": email,
+          "password": password,
+        },
+      );
+
+      if (response.data is! Map<String, dynamic>) {
+        emit(LoginErorrState("Server Error: Invalid response format"));
+        return;
+      }
+      // Convert JSON to Model
       model = LoginModel.fromJson(response.data);
-      if (model.status == true) {
-        // Store user token
-        HiveHelper.setToken(model.data?.token ?? "");
+
+      if (model?.status == true) {
+        // 1. Save Token and Data
+        HiveHelper.setToken(model?.data?.token ?? "");
         HiveHelper.setValueLoginBox();
 
-        // Store username and email in Hive box
-        username = model.data?.name;
-        emaill = model.data?.email;
-
+        // 2. Save User Data
         var box = Hive.box('USER_BOX');
-        box.put('username', username); // Save in Hive for persistence
-        box.put('email', emaill);
+        box.put('username', model?.data?.name);
+        box.put('email', model?.data?.email);
+        box.put('phone', model?.data?.phone);
 
-        // Navigate to BottomNav page after successful login
-        Get.offAll(const BottomNav());
+        // 3. Navigate to Home
+        Get.offAll(() => const BottomNav());
 
-        emit(LoginSuccessState(model.message ?? ""));
+        emit(LoginSuccessState(model?.message ?? "Login Successful"));
       } else {
-        emit(
-          LoginErorrState(model.message ?? ""),
-        );
+        // If status is false (Wrong password/email)
+        emit(LoginErorrState(model?.message ?? "Something went wrong"));
       }
     } catch (e) {
-      emit(LoginErorrState("Connection is bad!"));
+      // Print actual error
+      print("Login Error: ${e.toString()}");
+      emit(LoginErorrState(e.toString()));
     }
   }
 }

@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnify_client/cubit/login_cubit.dart';
-import 'package:learnify_client/helpers/hive_helper.dart';
+
 import 'package:learnify_client/screens/bottomNav/bottom_nav.dart';
 import 'package:learnify_client/screens/setting_screen/cubit/switch_cubit.dart';
 import 'package:learnify_client/screens/sign_in_screen.dart';
@@ -69,10 +68,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             final cubit = context.read<SwitchCubit>();
             return Scaffold(
               backgroundColor:
-              cubit.isDarkMode ? const Color(0xff151515) : Colors.white,
+                  cubit.isDarkMode ? const Color(0xff151515) : Colors.white,
               appBar: AppBar(
                 backgroundColor:
-                cubit.isDarkMode ? const Color(0xff151515) : Colors.white,
+                    cubit.isDarkMode ? const Color(0xff151515) : Colors.white,
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(right: 15.0, top: 10),
@@ -151,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Center(
                                 child: Padding(
                                   padding:
-                                  EdgeInsets.only(left: screenWidth * 0.02),
+                                      EdgeInsets.only(left: screenWidth * 0.02),
                                   child: Text(
                                     "Please enter your personal information",
                                     style: GoogleFonts.poppins(
@@ -167,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Center(
                                 child: Padding(
                                   padding:
-                                  EdgeInsets.only(left: screenWidth * 0.02),
+                                      EdgeInsets.only(left: screenWidth * 0.02),
                                   child: Text(
                                     "to create your account",
                                     style: GoogleFonts.poppins(
@@ -186,22 +185,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(height: 20),
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Padding(padding: const EdgeInsets.only(bottom: 10), child: Text(
-                            "Name",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: screenWidth * 0.045,
-                                fontWeight: FontWeight.bold,
-                                color: cubit.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Name",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: screenWidth * 0.045,
+                                  fontWeight: FontWeight.bold,
+                                  color: cubit.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
                               ),
                             ),
-                          ),),
+                          ),
                         ),
                         SizedBox(
                           height: 48,
-                          child: TextField(
+                          child: TextFormField(
                             keyboardType: TextInputType.name,
                             controller: _nameController,
                             style: GoogleFonts.poppins(
@@ -222,27 +224,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Name is required';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Padding(padding: const EdgeInsets.only(bottom: 10), child: Text(
-                            "Phone Number",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: screenWidth * 0.045,
-                                fontWeight: FontWeight.bold,
-                                color: cubit.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Phone Number",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: screenWidth * 0.045,
+                                  fontWeight: FontWeight.bold,
+                                  color: cubit.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
                               ),
                             ),
-                          ),),
+                          ),
                         ),
                         SizedBox(
                           height: 48,
-                          child: TextField(
+                          child: TextFormField(
                             keyboardType: TextInputType.number,
                             controller: _phoneNumberController,
                             style: GoogleFonts.poppins(
@@ -263,27 +274,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Phone Number is required';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Padding(padding: const EdgeInsets.only(bottom: 10), child: Text(
-                            "Email",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: screenWidth * 0.045,
-                                fontWeight: FontWeight.bold,
-                                color: cubit.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Email",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: screenWidth * 0.045,
+                                  fontWeight: FontWeight.bold,
+                                  color: cubit.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
                               ),
                             ),
-                          ),),
+                          ),
                         ),
                         SizedBox(
                           height: 48,
-                          child: TextField(
+                          child: TextFormField(
                             controller: _emailController,
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
@@ -303,23 +323,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email is required';
+                              }
+                              if (!GetUtils.isEmail(value)) {
+                                return 'Invalid email address';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Padding(padding: const EdgeInsets.only(bottom: 10), child:Text(
-                            "Password",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: screenWidth * 0.045,
-                                fontWeight: FontWeight.bold,
-                                color: cubit.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Password",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: screenWidth * 0.045,
+                                  fontWeight: FontWeight.bold,
+                                  color: cubit.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
                               ),
                             ),
-                          ),
                           ),
                         ),
                         SizedBox(
@@ -359,9 +390,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 },
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password is required';
+                              }
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-                        const SizedBox(height: 20,),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: SizedBox(
@@ -375,103 +417,105 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   );
                                 }
                                 return Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(
-                                      flex: 1,
-                                      child: ElevatedButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          context.read<RegisterCubit>().Register(
-                                            
-                                              phone: _phoneNumberController.text,
-                                              name: _nameController.text,
-                                              email: _emailController.text,
-                                              password:
-                                              _userPasswordController.text
-                                          );
-                                          setState(() {
-                                            HiveHelper.setValueLoginBox();
-                                          });
-                                        }
-                                        // Button action here
-                                        print('Button Pressed');
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(255,
-                                            5, 106, 255), // Button background color
-                                        foregroundColor: Colors.white, // Text color
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical:
-                                            10), // Adjusted padding (reduced vertical padding)
-                                        textStyle: const TextStyle(
-                                          fontSize:
-                                          16, // Reduced font size to fit text better
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8.0), // Adjust radius here
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Register',
-                                        style: GoogleFonts.poppins(
-                                          textStyle: const TextStyle(
+                                        flex: 1,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              context
+                                                  .read<RegisterCubit>()
+                                                  .userRegister(
+                                                      phone:
+                                                          _phoneNumberController
+                                                              .text,
+                                                      name:
+                                                          _nameController.text,
+                                                      email:
+                                                          _emailController.text,
+                                                      password:
+                                                          _userPasswordController
+                                                              .text);
+                                              // HiveHelper.setValueLoginBox() removed - handled in Cubit
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color
+                                                .fromARGB(255, 5, 106,
+                                                255), // Button background color
+                                            foregroundColor:
+                                                Colors.white, // Text color
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical:
+                                                    10), // Adjusted padding (reduced vertical padding)
+                                            textStyle: const TextStyle(
                                               fontSize:
-                                              16, // Keep the size a bit smaller to fit
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.white),
+                                                  16, // Reduced font size to fit text better
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      8.0), // Adjust radius here
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    ),
+                                          child: Text(
+                                            'Register',
+                                            style: GoogleFonts.poppins(
+                                              textStyle: const TextStyle(
+                                                  fontSize:
+                                                      16, // Keep the size a bit smaller to fit
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        )),
                                     const SizedBox(width: 20),
                                     Expanded(
-                                      flex: 1,
-                                      child: ElevatedButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          context.read<LoginCubit>().login(
-                                              email: _emailController.text,
-                                              password:
-                                              _userPasswordController.text);
-                                          setState(() {
-                                            HiveHelper.setValueLoginBox();
-                                          });
-                                        }
-                                        // Button action here
-                                        print('Button Pressed');
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.red, // Button background color
-                                        foregroundColor: Colors.white, // Text color
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical:
-                                            10), // Adjusted padding (reduced vertical padding)
-                                        textStyle: const TextStyle(
-                                          fontSize:
-                                          16, // Reduced font size to fit text better
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8.0), // Adjust radius here
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Google',
-                                        style: GoogleFonts.poppins(
-                                          textStyle: const TextStyle(
+                                        flex: 1,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Get.snackbar(
+                                              "Coming Soon",
+                                              "Google Login is not implemented yet",
+                                              backgroundColor: Colors.orange,
+                                              colorText: Colors.white,
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors
+                                                .red, // Button background color
+                                            foregroundColor:
+                                                Colors.white, // Text color
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical:
+                                                    10), // Adjusted padding (reduced vertical padding)
+                                            textStyle: const TextStyle(
                                               fontSize:
-                                              16, // Keep the size a bit smaller to fit
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.white),
+                                                  16, // Reduced font size to fit text better
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      8.0), // Adjust radius here
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    ),
+                                          child: Text(
+                                            'Google',
+                                            style: GoogleFonts.poppins(
+                                              textStyle: const TextStyle(
+                                                  fontSize:
+                                                      16, // Keep the size a bit smaller to fit
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        )),
                                   ],
                                 );
                               },

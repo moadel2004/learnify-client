@@ -10,7 +10,7 @@ class MentorChatingScreen extends StatefulWidget {
 }
 
 class _MentorChatingScreenState extends State<MentorChatingScreen> {
-  // تعديل نوع القائمة ليحتوي على خريطة تمثل الرسالة والوقت
+  // Change list type to contain a map representing message and time
   List<Map<String, String>> messages = [];
   TextEditingController messageController = TextEditingController();
   List<String> autoReplies = [

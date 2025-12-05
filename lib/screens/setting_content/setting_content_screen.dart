@@ -176,8 +176,8 @@ class SettingContentScreen extends StatelessWidget {
 
     final loginCubit = context.read<LoginCubit>();
     var box = Hive.box('USER_BOX');
-    String? username = box.get('username', defaultValue: loginCubit.username);
-    String? email = box.get('email', defaultValue: registerCubit.emaill);
+    String? username = box.get('username', defaultValue: 'guest');
+    String? email = box.get('email', defaultValue: 'example@gmail.com');
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
       child: Container(
